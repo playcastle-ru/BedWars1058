@@ -48,7 +48,6 @@ import com.andrei1058.bedwars.database.Database;
 import com.andrei1058.bedwars.database.SQLite;
 import com.andrei1058.bedwars.halloween.HalloweenSpecial;
 import com.andrei1058.bedwars.language.*;
-import com.andrei1058.bedwars.levels.internal.InternalLevel;
 import com.andrei1058.bedwars.levels.internal.LevelListeners;
 import com.andrei1058.bedwars.listeners.*;
 import com.andrei1058.bedwars.listeners.arenaselector.ArenaSelectorListener;
@@ -373,7 +372,7 @@ public class BedWars extends JavaPlugin {
         }, 10L);
 
         /* Levels support */
-        setLevelAdapter(new InternalLevel());
+        Bukkit.getPluginManager().registerEvents(new LevelListeners(), BedWars.plugin);
 
         /* Register tasks */
         Bukkit.getScheduler().runTaskTimer(this, new Refresh(), 20L, 20L);
@@ -711,17 +710,7 @@ public class BedWars extends JavaPlugin {
      */
 
     public static void setLevelAdapter(Level levelsManager) {
-        if (levelsManager instanceof InternalLevel) {
-            if (LevelListeners.instance == null) {
-                Bukkit.getPluginManager().registerEvents(new LevelListeners(), BedWars.plugin);
-            }
-        } else {
-            if (LevelListeners.instance != null) {
-                PlayerJoinEvent.getHandlerList().unregister(LevelListeners.instance);
-                PlayerQuitEvent.getHandlerList().unregister(LevelListeners.instance);
-                LevelListeners.instance = null;
-            }
-        }
+        System.out.println("We're now chaning level adapter to" + levelsManager + "!");
         level = levelsManager;
     }
 

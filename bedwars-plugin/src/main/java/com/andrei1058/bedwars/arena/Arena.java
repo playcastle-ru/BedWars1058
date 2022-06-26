@@ -57,7 +57,6 @@ import com.andrei1058.bedwars.arena.team.BedWarsTeam;
 import com.andrei1058.bedwars.arena.team.TeamAssigner;
 import com.andrei1058.bedwars.configuration.ArenaConfig;
 import com.andrei1058.bedwars.configuration.Sounds;
-import com.andrei1058.bedwars.levels.internal.InternalLevel;
 import com.andrei1058.bedwars.levels.internal.PerMinuteTask;
 import com.andrei1058.bedwars.listeners.blockstatus.BlockStatusListener;
 import com.andrei1058.bedwars.listeners.dropshandler.PlayerDrops;
@@ -1493,9 +1492,7 @@ public class Arena implements IArena {
         if (status == GameState.starting) {
             startingTask = new GameStartingTask(this);
         } else if (status == GameState.playing) {
-            if (BedWars.getLevelSupport() instanceof InternalLevel) {
-                perMinuteTask = new PerMinuteTask(this);
-            }
+            perMinuteTask = new PerMinuteTask(this);
             if (BedWars.getEconomy() instanceof WithEconomy) {
                 moneyperMinuteTask = new MoneyPerMinuteTask(this);
             }

@@ -48,30 +48,6 @@ public class LevelListeners implements Listener {
         instance = this;
     }
 
-    //create new level data on player join
-    @EventHandler(priority = EventPriority.HIGH)
-    public void onPlayerJoin(PlayerJoinEvent e) {
-        final UUID u = e.getPlayer().getUniqueId();
-        // create empty level first
-        new PlayerLevel(u, 1, 0);
-        Bukkit.getScheduler().runTaskAsynchronously(BedWars.plugin, () -> {
-            //if (PlayerLevel.getLevelByPlayer(e.getPlayer().getUniqueId()) != null) return;
-            Object[] levelData = BedWars.getRemoteDatabase().getLevelData(u);
-            PlayerLevel.getLevelByPlayer(u).lazyLoad((Integer) levelData[0], (Integer) levelData[1]);
-            //new PlayerLevel(e.getPlayer().getUniqueId(), (Integer)levelData[0], (Integer)levelData[1]);
-            //Bukkit.broadcastMessage("LAZY LOAD");
-        });
-    }
-
-    @EventHandler(priority = EventPriority.HIGHEST)
-    public void onPlayerQuit(PlayerQuitEvent e) {
-        final UUID u = e.getPlayer().getUniqueId();
-        Bukkit.getScheduler().runTaskAsynchronously(BedWars.plugin, () -> {
-            PlayerLevel pl = PlayerLevel.getLevelByPlayer(u);
-            pl.destroy();
-        });
-    }
-
     @EventHandler
     public void onGameEnd(GameEndEvent e) {
         for (UUID p : e.getWinners()) {
@@ -116,15 +92,6 @@ public class LevelListeners implements Listener {
                 }
             }
         }
-    }
-
-    @EventHandler(priority = EventPriority.HIGHEST)
-    public void onArenaLeave(PlayerLeaveArenaEvent e) {
-        final UUID u = e.getPlayer().getUniqueId();
-        Bukkit.getScheduler().runTaskAsynchronously(BedWars.plugin, () -> {
-            PlayerLevel pl = PlayerLevel.getLevelByPlayer(u);
-            if (pl != null) pl.updateDatabase();
-        });
     }
 
     @EventHandler
