@@ -33,8 +33,8 @@ import com.andrei1058.bedwars.api.server.ServerType;
 import com.andrei1058.bedwars.configuration.Sounds;
 import com.andrei1058.bedwars.stats.PlayerStats;
 import com.andrei1058.bedwars.support.papi.SupportPAPI;
-import com.google.common.io.ByteArrayDataOutput;
-import com.google.common.io.ByteStreams;
+import de.dytanic.cloudnet.driver.CloudNetDriver;
+import de.dytanic.cloudnet.ext.bridge.player.IPlayerManager;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
@@ -94,10 +94,10 @@ public class Misc {
     @SuppressWarnings("UnstableApiUsage")
     private static void forceKick(Player p, @Nullable IArena arena, boolean notAbandon, boolean disconnect) {
         if(!disconnect) {
-            ByteArrayDataOutput out = ByteStreams.newDataOutput();
-            out.writeUTF("Connect");
-            out.writeUTF(config.getYml().getString("lobbyServer"));
-            p.sendPluginMessage(plugin, "BungeeCord", out.toByteArray());
+            CloudNetDriver.getInstance().getServicesRegistry()
+                .getFirstService(IPlayerManager.class)
+                .getPlayerExecutor(p.getUniqueId())
+                .connectToFallback();
         }
         if (arena != null && !notAbandon && arena.getStatus() == GameState.playing) {
             if (config.getBoolean(ConfigPath.GENERAL_CONFIGURATION_MARK_LEAVE_AS_ABANDON)) {

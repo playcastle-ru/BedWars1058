@@ -64,7 +64,11 @@
         </repository>
         <repository>
             <id>andrei1058-releases</id>
-            <url>https://repo.andrei1058.com/releases/</url>
+            <url>https://repo.andrei1058.dev/releases/</url>
+        </repository>
+        <repository>
+            <id>cloudnet-releases</id>
+            <url>https://repo.cloudnetservice.eu/repository/releases/</url>
         </repository>
     </repositories>
 
@@ -266,6 +270,27 @@
             <scope>compile</scope>
         </dependency>
         <!--        End of Sidebar LIB-->
+
+        <!-- CloudNet API -->
+        <dependency>
+            <groupId>de.dytanic.cloudnet</groupId>
+            <artifactId>cloudnet-bridge</artifactId>
+            <version>3.4.4-RELEASE</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>de.dytanic.cloudnet</groupId>
+            <artifactId>cloudnet-driver</artifactId>
+            <version>3.4.4-RELEASE</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>de.dytanic.cloudnet</groupId>
+            <artifactId>cloudnet</artifactId>
+            <version>3.4.4-RELEASE</version>
+            <scope>provided</scope>
+        </dependency>
+        <!-- End of CloudNet API -->
     </dependencies>
 
     <build>
